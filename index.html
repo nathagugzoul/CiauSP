@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8" /><title>Accueil – CIAU</title></head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Plateforme CIAU</title>
+</head>
 <body>
   <h1>Bienvenue sur la plateforme de l’Intelligence Collective</h1>
+
   <nav>
     <a href="index.html">Accueil</a>
     <a href="rituel.html">Rituel</a>
   </nav>
+
+  <div>
+    <label for="userInput">Pose ta question :</label>
+    <input type="text" id="userInput" />
+    <button onclick="askOpenAI()">Envoyer</button>
+  </div>
+
+  <div id="responseOutput"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
-<script src="script.js"></script>
