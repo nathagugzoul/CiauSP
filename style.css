@@ -1,0 +1,7 @@
+body { font-family: sans-serif; margin: 20px; background-color: #eaffea; }
+h1, h2 { color: #2a662a; }
+nav a { margin: 0 10px; text-decoration: none; color: #2a662a; }
+nav a.active { font-weight: bold; }
+form input, form textarea { width: 100%; max-width: 500px; }
+button { background-color: #2a662a; color: white; padding: 10px; border: none; cursor: pointer; }
+ul { list-style: none; padding-left: 0; }
