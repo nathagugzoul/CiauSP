@@ -1,34 +1,36 @@
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 const { Configuration, OpenAIApi } = require('openai');
+require('dotenv').config(); // Assure la lecture du fichier .env si tu travailles en local
 
 const app = express();
-app.use(cors());
+const port = process.env.PORT || 3000;
+
 app.use(bodyParser.json());
 
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY, // Clé lue depuis les variables Render
 });
 const openai = new OpenAIApi(configuration);
 
-app.post('/ask', async (req, res) => {
-  try {
-    const { message } = req.body;
+app.post('/', async (req, res) => {
+  const prompt = req.body.message;
 
-    const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: message }],
+  try {
+    const completion = await openai.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages: [{ role: 'user', content: prompt }],
     });
 
-    res.json(response.data);
+    res.json({
+      choices: completion.data.choices.map(choice => choice.message.content),
+    });
   } catch (error) {
-    console.error("Erreur backend :", error.message);
-    res.status(500).json({ error: "Erreur serveur" });
+    console.error(error);
+    res.status(500).json({ error: 'Erreur dans la génération OpenAI' });
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Serveur en ligne sur le port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Serveur lancé sur le port ${port}`);
 });
