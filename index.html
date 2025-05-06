@@ -107,11 +107,11 @@ document.getElementById('share-btn').
   copyBtn.style.display = 'none';
 
   try {
-    const response = await fetch('https://TON_BACKEND_RENDER.onrender.com/api/ask', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question })
-    });
+    const response = await fetch('https://ciau-backend.onrender.com/api/ask', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ question })
+});
 
     const data = await response.json();
     responseEl.innerText = data.answer;
