@@ -69,3 +69,35 @@
   <pre id="response" style="white-space:pre-wrap;"></pre>
   <button id="copy-btn" style="display:none;">Copier la réponse</button>
 </div>
+<script>
+document.getElementById('ask-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const question = document.getElementById('question').value;
+  const responseEl = document.getElementById('response');
+  const copyBtn = document.getElementById('copy-btn');
+
+  responseEl.innerText = 'Chargement...';
+  copyBtn.style.display = 'none';
+
+  try {
+    const response = await fetch('https://TON_BACKEND_RENDER.onrender.com/api/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question })
+    });
+
+    const data = await response.json();
+    responseEl.innerText = data.answer;
+    copyBtn.style.display = 'inline-block';
+  } catch (err) {
+    responseEl.innerText = 'Erreur lors de la requête.';
+  }
+});
+
+document.getElementById('copy-btn').addEventListener('click', () => {
+  const text = document.getElementById('response').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Réponse copiée !');
+  });
+});
+</script>
