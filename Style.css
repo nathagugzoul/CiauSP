@@ -1,0 +1,7 @@
+body { font-family: Arial, sans-serif; background: #f4fff4; padding: 20px; }
+header { background: #cceccc; padding: 10px; }
+nav a { margin-right: 15px; text-decoration: none; color: #2a5c2a; }
+nav a.active { font-weight: bold; }
+input[type=text] { width: 80%; padding: 10px; }
+button { padding: 10px 20px; margin-top: 10px; }
+pre { background: #eef; padding: 15px; white-space: pre-wrap; border: 1px solid #ccc; }
