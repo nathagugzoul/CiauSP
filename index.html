@@ -30,7 +30,33 @@
   <title>CIAU – Intelligence Collective</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body>document.getElementById('share-btn').addEventListener('click', async () => {
+  const responseText = document.getElementById('response').innerText;
+  const fileInput = document.getElementById('fileInput');
+
+  if (!navigator.canShare || !navigator.canShare({ files: [] })) {
+    alert("Le partage de fichiers n’est pas supporté sur ce navigateur.");
+    return;
+  }
+
+  const files = fileInput.files;
+  if (files.length === 0) {
+    alert("Ajoute un fichier ou une image à partager.");
+    return;
+  }
+
+  const fileToShare = files[0];
+
+  try {
+    await navigator.share({
+      title: 'Réponse CIAU',
+      text: responseText,
+      files: [fileToShare]
+    });
+  } catch (error) {
+    alert("Partage annulé ou erreur : " + error.message);
+  }
+});
   <header>
     <img src="logo_ciau.png" alt="Logo CIAU" style="height: 80px;" />
     <h1>CIAU – Intelligence Collective Autonome Universelle</h1>
@@ -67,7 +93,8 @@
 
 <div id="response-container">
   <pre id="response" style="white-space:pre-wrap;"></pre>
-  <button id="copy-btn" style="display:none;">Copier la réponse</button>
+  <button id="copy-btn"<input type="file" id="fileInput" />
+<button id="share-btn" style="display:none;">Partager la réponse + fichier</button> style="display:none;">Copier la réponse</button>
 </div>
 <script>
 document.getElementById('ask-form').addEventListener('submit', async (e) => {
