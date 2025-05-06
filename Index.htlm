@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Intelligence Collective – Accueil</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>INTELLIGENCE COLLECTIVE (CIAU)</h1>
+    <nav>
+      <a href="index.html" class="active">Accueil</a>
+      <a href="rituel.html">Rituel</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Recherche collective (OpenAI)</h2>
+      <input type="text" id="userInput" placeholder="Pose ta question..." />
+      <button onclick="askOpenAI()">Interroger l’IA</button>
+      <pre id="responseOutput">...</pre>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
