@@ -1,33 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { OpenAI } = require('openai'); // CORRECTION : utiliser la nouvelle classe OpenAI
 
 const app = express();
-const port = process.env.PORT || 10000;
+const port = process.env.PORT || 10000; // Port choisi ou par défaut
 
-app.use(bodyParser.json());
 app.use(cors());
+app.use(bodyParser.json());
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // ta clé API est lue depuis les variables Render
-});
-
-app.post('/ask', async (req, res) => {
+app.post('/ask', (req, res) => {
   const question = req.body.question;
+  console.log('Question reçue :', question);
 
-  try {
-    const chatCompletion = await openai.chat.completions.create({
-      messages: [{ role: "user", content: question }],
-      model: "gpt-3.5-turbo",
-    });
-
-    const reponse = chatCompletion.choices[0].message.content;
-    res.json({ reponse });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ reponse: "Erreur lors de la génération de la réponse collective." });
-  }
+  // Ici tu peux connecter à OpenAI ou renvoyer une réponse simulée
+  const reponse = `Réponse collective IC : Cette question "${question}" implique une exploration collective.`;
+  
+  res.json({ reponse });
 });
 
 app.listen(port, () => {
