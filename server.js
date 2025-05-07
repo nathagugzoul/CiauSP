@@ -1,21 +1,35 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const { Configuration, OpenAIApi } = require('openai');
 
 const app = express();
-const port = process.env.PORT || 10000; // Port choisi ou par défaut
+const port = process.env.PORT || 10000;
 
-app.use(cors());
 app.use(bodyParser.json());
+app.use(cors());
 
-app.post('/ask', (req, res) => {
-  const question = req.body.question;
-  console.log('Question reçue :', question);
+// Initialiser OpenAI avec ta clé stockée dans les variables d'environnement
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
 
-  // Ici tu peux connecter à OpenAI ou renvoyer une réponse simulée
-  const reponse = `Réponse collective IC : Cette question "${question}" implique une exploration collective.`;
-  
-  res.json({ reponse });
+app.post('/ask', async (req, res) => {
+  const { question } = req.body;
+
+  try {
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: question }],
+    });
+
+    const reponse = completion.data.choices[0].message.content;
+    res.json({ reponse: reponse });
+  } catch (error) {
+    console.error("Erreur API OpenAI :", error);
+    res.status(500).json({ reponse: "Erreur lors de la génération de la réponse." });
+  }
 });
 
 app.listen(port, () => {
