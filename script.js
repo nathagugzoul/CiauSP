@@ -7,7 +7,7 @@ soumettreBtn.addEventListener("click", async function () {
   const question = questionInput.value.trim();
   if (question !== "") {
     try {
-      const response = await fetch('https://ciausp-xsvm.onrender.com/ask', {
+      const response = await fetch('https://ciausp-2.onrender.com/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: question })
