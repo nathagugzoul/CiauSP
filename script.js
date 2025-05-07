@@ -5,7 +5,7 @@ async function askOpenAI() {
   responseOutput.textContent = "Chargement de la réponse collective...";
 
   try {
-    const response = await fetch('https://ciauspbackend.onrender.com/ask', { // Remplace par ton URL Render exacte
+    const response = await fetch('https://nathagugzoul.github.io/Ciao-site/ask', { // Remplace par ton URL Render exacte
       method: "POST",
       headers: {
         "Content-Type": "application/json"
