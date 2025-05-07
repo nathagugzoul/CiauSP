@@ -1,3 +1,8 @@
+const questionInput = document.getElementById("question");
+const soumettreBtn = document.getElementById("soumettre");
+const reponseContainer = document.getElementById("reponse-collective");
+const memoireContainer = document.getElementById("memoire-collective");
+
 soumettreBtn.addEventListener("click", async function () {
   const question = questionInput.value.trim();
   if (question !== "") {
@@ -17,3 +22,13 @@ soumettreBtn.addEventListener("click", async function () {
     }
   }
 });
+
+function afficherReponse(texte) {
+  reponseContainer.textContent = texte;
+}
+
+function ajouterMemoire(question) {
+  const li = document.createElement("li");
+  li.textContent = question;
+  memoireContainer.appendChild(li);
+}
