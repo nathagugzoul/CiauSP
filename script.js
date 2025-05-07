@@ -3,21 +3,34 @@ const soumettreBtn = document.getElementById("soumettre");
 const reponseContainer = document.getElementById("reponse-collective");
 const memoireContainer = document.getElementById("memoire-collective");
 
+// ATTENTION : Ta clé API est visible publiquement → ne fais ça que pour tester
+const API_KEY = "TA_CLE_API_OPENAI"; // remplace par ta vraie clé
+
 soumettreBtn.addEventListener("click", async function () {
   const question = questionInput.value.trim();
   if (question !== "") {
     try {
-      const response = await fetch('https://ciausp-2.onrender.com/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: question })
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${API_KEY}`
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [{ role: "user", content: question }]
+        })
       });
+
       const data = await response.json();
-      const reponse = `Réponse collective IC : ${data.reponse}`;
+      const reponseIA = data.choices[0].message.content;
+      const reponse = `Réponse collective IC : ${reponseIA}`;
+      
       afficherReponse(reponse);
       ajouterMemoire(question);
+
     } catch (error) {
-      afficherReponse("Erreur de connexion au backend.");
+      afficherReponse("Erreur de connexion à OpenAI.");
       console.error(error);
     }
   }
