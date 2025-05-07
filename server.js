@@ -7,11 +7,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+const OpenAI = require("openai");
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
 });
-const openai = new OpenAIApi(configuration);
-
 app.post('/ask', async (req, res) => {
   const message = req.body.message;
   try {
@@ -26,5 +25,5 @@ app.post('/ask', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
+no const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
