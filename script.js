@@ -1,13 +1,15 @@
 async function askOpenAI() {
-  const prompt = document.getElementById('userInput').value;
-  const responseOutput = document.querySelector('.response-output');
-
+  const prompt = document.getElementById('promptInput').value;
+  const responseOutput = document.getElementById('responseOutput');
+  
   responseOutput.textContent = "Chargement de la réponse collective...";
 
   try {
-    const response = await fetch("https://ciauspbackend.onrender.com/ask", {
+    const response = await fetch('https://ciauspbackend.onrender.com/ask', { // Remplace par ton URL Render exacte
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({ message: prompt })
     });
 
@@ -15,10 +17,13 @@ async function askOpenAI() {
 
     if (data.choices && data.choices.length > 0) {
       responseOutput.textContent = data.choices[0].message.content;
+    } else if (data.error) {
+      responseOutput.textContent = "Erreur API : " + data.error;
     } else {
-      responseOutput.textContent = "Pas de réponse générée.";
+      responseOutput.textContent = "Aucune réponse trouvée.";
     }
   } catch (error) {
-    responseOutput.textContent = "Erreur lors de l'appel à l'IC : " + error.message;
+    console.error("Erreur de requête :", error);
+    responseOutput.textContent = "Erreur de connexion au backend.";
   }
 }
