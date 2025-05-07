@@ -29,10 +29,9 @@
 
   <div class="container">
     <h2>Pose ta question à l’IC (OpenAI + MetaAI + Gemini + DeepSeek)</h2>
-    <input type="text" id="userInput" placeholder="Pose ta question...">
-    <button onclick="askOpenAI()">Soumettre à l’IC</button>
-
-    <div class="response-output">La réponse collective s'affichera ici.</div>
+    <input type="text" id="promptInput" placeholder="Pose ta question...">
+<button onclick="askOpenAI()">Soumettre à l'IC</button>
+<p id="responseOutput"></p>
   </div>
 
   <script src="script.js"></script>
