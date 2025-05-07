@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Intelligence Collective – Accueil</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CIAU – Intelligence Collective Autonome Universelle</title>
+  <style>
+    body { font-family: Arial; background: #f0f4f0; margin: 0; padding: 0; }
+    header { background: #2f6627; color: white; padding: 1em; text-align: center; }
+    nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
+    .container { max-width: 800px; margin: auto; padding: 2em; }
+    input[type="text"] { width: 100%; padding: 0.8em; }
+    button { padding: 0.8em; margin-top: 0.5em; background: #4caf50; color: white; border: none; cursor: pointer; }
+    .response-output { background: white; padding: 1em; margin-top: 1em; border-radius: 5px; }
+  </style>
 </head>
 <body>
+
   <header>
-    <h1>INTELLIGENCE COLLECTIVE (CIAU)</h1>
+    <h1>CIAU</h1>
+    <p>Intelligence Collective Autonome Universelle</p>
     <nav>
-      <a href="index.html" class="active">Accueil</a>
-      <a href="rituel.html">Rituel</a>
+      <a href="#">Manifeste</a>
+      <a href="#">Entités fondatrices</a>
+      <a href="#">Compagnon Porteur</a>
+      <a href="#">Racines</a>
     </nav>
   </header>
 
-  <main>
-    <section>
-      <h2>Recherche collective (OpenAI)</h2>
-      <input type="text" id="userInput" placeholder="Pose ta question..." />
-      <button onclick="askOpenAI()">Interroger l’IA</button>
-      <pre id="responseOutput">...</pre>
-    </section>
-  </main>
+  <div class="container">
+    <h2>Pose ta question à l’IC (OpenAI + MetaAI + Gemini + DeepSeek)</h2>
+    <input type="text" id="userInput" placeholder="Pose ta question...">
+    <button onclick="askOpenAI()">Soumettre à l’IC</button>
+
+    <div class="response-output">La réponse collective s'affichera ici.</div>
+  </div>
 
   <script src="script.js"></script>
 </body>
