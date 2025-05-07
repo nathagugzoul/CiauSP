@@ -13,14 +13,32 @@
   </nav>
 
   <div>
-    <label for="userInput">Pose ta question :</label>
-    <input type="text" id="userInput" />
-    <button onclick="askOpenAI()">Envoyer</button>
-  </div>
+    async function askOpenAI() {
+  const prompt = document.querySelector('input').value;
+  const responseOutput = document.querySelector('.response-output');
 
-  <div id="responseOutput"></div>
+  responseOutput.textContent = "Chargement de la réponse collective...";
 
-  <script src="script.js"></script>
+  try {
+    const response = await fetch("https://ciauspbackend.onrender.com/ask", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: prompt })
+    });
+
+    const data = await response.json();
+
+    if (data.choices && data.choices.length > 0) {
+      responseOutput.textContent = data.choices[0].message.content;
+    } else {
+      responseOutput.textContent = "Pas de réponse générée.";
+    }
+  } catch (error) {
+    responseOutput.textContent = "Erreur lors de l'appel à l'IC : " + error.message;
+  }
+}
 </body>
 </html>
 <!DOCTYPE html>
