@@ -5,7 +5,7 @@ async function askOpenAI() {
   responseOutput.textContent = "Consultation de l'intelligence collective...";
 
   try {
-    const response = await fetch('https://ciauspbackend.onrender.com/ask', { // Remplace par l'URL exacte de ton Render backend
+    const response = await fetch('https://ciausp-ltcf.onrender.com/ask', { // Remplace par l'URL exacte de ton Render backend
       method: "POST",
       headers: {
         "Content-Type": "application/json"
