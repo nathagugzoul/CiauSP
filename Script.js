@@ -27,6 +27,7 @@ soumettreBtn.addEventListener("click", async function () {
       
       afficherReponse(reponse);
       ajouterMemoire(question);
+      
 
     } catch (error) {
       afficherReponse("Erreur de connexion à OpenAI.");
@@ -44,3 +45,20 @@ function ajouterMemoire(question) {
   li.textContent = question;
   memoireContainer.appendChild(li);
 }
+document.getElementById('askAI').addEventListener('click', async () => {
+    const prompt = document.getElementById('userPrompt').value;
+    const responseDiv = document.getElementById('aiResponse');
+    responseDiv.textContent = "L'Intelligence Collective réfléchit...";
+    
+    try {
+        const res = await fetch('https://ton-backend-url.com/ask', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ prompt })
+        });
+        const data = await res.json();
+        responseDiv.textContent = data.response;
+    } catch (err) {
+        responseDiv.textContent = "Erreur : impossible d'obtenir une réponse.";
+    }
+});
