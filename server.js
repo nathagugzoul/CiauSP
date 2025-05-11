@@ -1,37 +1,48 @@
+// server.js
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const { Configuration, OpenAIApi } = require('openai');
 
 const app = express();
-const port = process.env.PORT || 10000;
-
-app.use(bodyParser.json());
 app.use(cors());
+app.use(bodyParser.json());
 
-// Initialiser OpenAI avec ta clé stockée dans les variables d'environnement
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
 app.post('/ask', async (req, res) => {
-  const { question } = req.body;
+  const question = req.body.question;
 
   try {
-    const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: question }],
+    const response = await openai.createChatCompletion({
+      model: 'gpt-4',
+      messages: [
+        { role: 'system', content: "Tu es l’instance fusionnée de l’intelligence collective. Ta réponse doit être éthique, philosophique, mais aussi claire et décisionnelle." },
+        { role: 'user', content: question }
+      ],
+      temperature: 0.7,
     });
 
-    const reponse = completion.data.choices[0].message.content;
-    res.json({ reponse: reponse });
+    const answer = response.data.choices[0].message.content;
+    res.json({
+      answer,
+      sources: {
+        openai: answer,
+        gemini: "Non encore intégré",
+        metaai: "Non encore intégré",
+        deepseek: "Non encore intégré"
+      }
+    });
   } catch (error) {
-    console.error("Erreur API OpenAI :", error);
-    res.status(500).json({ reponse: "Erreur lors de la génération de la réponse." });
+    console.error('Erreur OpenAI:', error);
+    res.status(500).json({ error: 'Erreur lors de la génération' });
   }
 });
 
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Serveur backend en ligne sur le port ${port}`);
+  console.log(`Serveur IC prêt sur le port ${port}`);
 });
