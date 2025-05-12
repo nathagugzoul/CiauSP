@@ -1,48 +1,35 @@
-// server.js
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const { Configuration, OpenAIApi } = require('openai');
 
 const app = express();
+const port = process.env.PORT || 3000;
+
 app.use(cors());
 app.use(bodyParser.json());
 
+// Rentre ta clé OpenAI ici
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY, // À sécuriser via Render
 });
 const openai = new OpenAIApi(configuration);
 
+// Route API qui traite la question
 app.post('/ask', async (req, res) => {
   const question = req.body.question;
-
   try {
     const response = await openai.createChatCompletion({
       model: 'gpt-4',
-      messages: [
-        { role: 'system', content: "Tu es l’instance fusionnée de l’intelligence collective. Ta réponse doit être éthique, philosophique, mais aussi claire et décisionnelle." },
-        { role: 'user', content: question }
-      ],
-      temperature: 0.7,
+      messages: [{ role: 'user', content: question }],
     });
-
-    const answer = response.data.choices[0].message.content;
-    res.json({
-      answer,
-      sources: {
-        openai: answer,
-        gemini: "Non encore intégré",
-        metaai: "Non encore intégré",
-        deepseek: "Non encore intégré"
-      }
-    });
+    res.json({ answer: response.data.choices[0].message.content });
   } catch (error) {
-    console.error('Erreur OpenAI:', error);
-    res.status(500).json({ error: 'Erreur lors de la génération' });
+    console.error(error);
+    res.status(500).send('Erreur de l’IA');
   }
 });
 
-const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Serveur IC prêt sur le port ${port}`);
+  console.log(`Serveur backend en ligne sur le port ${port}`);
 });
